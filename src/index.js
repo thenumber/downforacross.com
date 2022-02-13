@@ -25,7 +25,8 @@ import './style.css';
 import './dark.css';
 
 const Root = () => {
-  const initialValue = window.location.search.indexOf('dark') !== -1;
+  const initialValue = true;
+  //window.location.search.indexOf('dark') !== -1;
   const [darkMode, setDarkMode] = React.useState(initialValue);
   const toggleMolesterMoons = () => {
     setDarkMode(!darkMode);

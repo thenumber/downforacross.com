@@ -385,7 +385,6 @@ export default class Game extends Component {
       <>
         <MobilePanel />
         {this.showingGame && this.renderGame()}
-        {this.showingChat && this.renderChat()}
       </>
     );
 
@@ -396,7 +395,6 @@ export default class Game extends Component {
           <Flex column shrink={0}>
             {this.showingGame && this.renderGame()}
           </Flex>
-          <Flex grow={1}>{this.showingChat && this.renderChat()}</Flex>
         </Flex>
         {powerups && <Powerups powerups={powerups} handleUsePowerup={this.handleUsePowerup} />}
       </>
