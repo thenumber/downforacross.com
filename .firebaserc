@@ -1,6 +1,7 @@
 {
   "projects": {
     "staging": "crosswordsio",
+    "production": "crosswordsio",
     "dfac": "crosswordsio"
   }
 }
