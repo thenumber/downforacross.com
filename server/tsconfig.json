@@ -9,5 +9,5 @@
       "@lib/*": ["../src/lib/*"]
     }
   },
-  "include": [".", "../src/lib", "../src/shared"]
+  "include": [".", "../src/lib", "../src/shared", "../server.ts"]
 }

@@ -90,7 +90,8 @@
     "ts-node": "^9.1.1"
   },
   "scripts": {
-    "start": "cross-env PORT=3020 react-scripts start",
+    "start": "node server.ts",
+    "dev": "cross-env PORT=3020 react-scripts start",
     "devfrontend": "REACT_APP_USE_LOCAL_SERVER=1 PORT=3020 react-scripts start",
     "devfrontendprod": "REACT_APP_ENV=production REACT_APP_USE_LOCAL_SERVER=1 PORT=3020 react-scripts start",
     "devbackend": "PORT=3021 nodemon --watch server -e \"ts\" --exec \"npx ts-node -P server/tsconfig.json server/server.ts\"",
