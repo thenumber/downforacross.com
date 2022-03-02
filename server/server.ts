@@ -1,10 +1,10 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-
+import path from 'path';
 import http from 'http';
 import socketIo from 'socket.io';
-import _ from 'lodash';
+import {truncate} from 'lodash';
 import cors from 'cors';
 import SocketManager from './SocketManager';
 import apiRouter from './api/router';
@@ -26,13 +26,18 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/api', apiRouter);
+const build_dir = path.resolve('build');
+app.use(express.static(build_dir));
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(build_dir, 'index.html'));
+});
 // ================== Logging ================
 
 function logAllEvents(log: typeof console.log) {
   io.on('*', (event: any, ...args: any) => {
     try {
-      log(`[${event}]`, _.truncate(JSON.stringify(args), {length: 100}));
+      log(`[${event}]`, truncate(JSON.stringify(args), {length: 100}));
     } catch (e) {
       log(`[${event}]`, args);
     }

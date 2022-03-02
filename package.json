@@ -92,15 +92,17 @@
   "scripts": {
     "start": "node server.ts",
     "dev": "cross-env PORT=3020 react-scripts start",
-    "devfrontend": "REACT_APP_USE_LOCAL_SERVER=1 PORT=3020 react-scripts start",
-    "devfrontendprod": "REACT_APP_ENV=production REACT_APP_USE_LOCAL_SERVER=1 PORT=3020 react-scripts start",
-    "devbackend": "PORT=3021 nodemon --watch server -e \"ts\" --exec \"npx ts-node -P server/tsconfig.json server/server.ts\"",
+    "devfrontend": "REACT_APP_LOCAL_SERVER=http://localhost:3021 PORT=3020 react-scripts start",
+    "devfrontendprod": "REACT_APP_ENV=production REACT_APP_LOCAL_SERVER=http://localhost:3021 PORT=3020 react-scripts start",
+    "devbackend": "source .env.local; PORT=3021 nodemon --watch server -e \"ts\" --exec \"npx ts-node -P server/tsconfig.json server/server.ts\"",
     "devbackendprod": "source .env.prod; PORT=3021 nodemon --watch server -e \"ts\" --exec \"npx ts-node -P server/tsconfig.json server/server.ts\"",
     "servebackendprod": "while true; do env $(cat .env.prod | xargs) PORT=3021 ts-node -P server/tsconfig.json server/server.ts || true; done",
     "servebackendstaging": "while true; do env $(cat .env.staging | xargs) PORT=4021 ts-node -P server/tsconfig.json server/server.ts || true; done",
+    "buildprivatedb": "REACT_APP_LOCAL_SERVER='' react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "createdbtables": "source .env.local; cd server && ./create_fresh_dbs.sh"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

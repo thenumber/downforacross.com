@@ -5,9 +5,7 @@ if (window.location.protocol === 'https' && process.env.NODE_ENV === 'developmen
   throw new Error('Please use http in development');
 }
 
-export const SERVER_URL = process.env.REACT_APP_USE_LOCAL_SERVER
-  ? 'http://localhost:3021'
-  : REMOTE_SERVER_URL;
-
+export const SERVER_URL =
+  process.env.REACT_APP_LOCAL_SERVER === undefined ? REMOTE_SERVER_URL : process.env.REACT_APP_LOCAL_SERVER;
 // socket.io server is same as api server
 export const SOCKET_HOST = SERVER_URL;
