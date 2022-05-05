@@ -7,17 +7,19 @@ import {MdSearch, MdCheckBoxOutlineBlank, MdCheckBox} from 'react-icons/md';
 import _ from 'lodash';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import classnames from 'classnames';
+import {withRouter} from 'react-router-dom';
 import Nav from '../components/common/Nav';
 import Upload from '../components/Upload';
 import {getUser, PuzzlelistModel} from '../store';
 import PuzzleList from '../components/PuzzleList';
 import {WelcomeVariantsControl} from '../components/WelcomeVariantsControl';
 import {isMobile, colorAverage} from '../lib/jsUtils';
+import {isSimpleView} from '../lib/isSimpleView';
 
 const BLUE = '#6aa9f4';
 const WHITE = '#FFFFFF';
 
-export default class Welcome extends Component {
+class Welcome extends Component {
   constructor() {
     super();
     this.state = {
@@ -34,6 +36,7 @@ export default class Welcome extends Component {
         Standard: true,
       },
       search: '',
+      isSimple: false,
     };
     this.loading = false;
     this.mobile = isMobile();
@@ -43,9 +46,10 @@ export default class Welcome extends Component {
   }
 
   componentDidMount() {
+    this.setState({isSimple: isSimpleView(this.props.location)});
     this.initializePuzzlelist();
     this.initializeUser();
-    this.navHeight = this.nav.current.getBoundingClientRect().height;
+    // this.navHeight = this.nav.current.getBoundingClientRect().height;
   }
 
   componentWillUnmount() {
@@ -207,7 +211,7 @@ export default class Welcome extends Component {
       marginBottom: 10,
     };
     const groupStyle = {
-      padding: 20,
+      padding: '0 20px',
     };
     const inputStyle = {
       margin: 'unset',
@@ -345,25 +349,31 @@ export default class Welcome extends Component {
 
   render() {
     return (
-      <Flex className={classnames('welcome', {mobile: this.mobile})} column grow={1}>
+      <Flex
+        className={classnames('welcome', {mobile: this.mobile}, {simple: this.state.isSimple})}
+        column
+        grow={1}
+      >
         <Helmet>
           <title>Down for a Cross</title>
         </Helmet>
-        <div className="welcome--nav" style={this.navStyle}>
-          <Nav
-            v2
-            mobile={this.mobile}
-            textStyle={this.navTextStyle}
-            linkStyle={this.navLinkStyle}
-            divRef={this.nav}
-          />
-        </div>
+        {!this.state.isSimple && (
+          <div className="welcome--nav" style={this.navStyle}>
+            <Nav
+              v2
+              mobile={this.mobile}
+              textStyle={this.navTextStyle}
+              linkStyle={this.navLinkStyle}
+              divRef={this.nav}
+            />
+          </div>
+        )}
         <Flex grow={1} basis={1}>
           {this.showingSidebar && (
-            <Flex className="welcome--sidebar" column shrink={0} style={{justifyContent: 'space-between'}}>
+            <Flex className="welcome--sidebar" column shrink={0}>
               {this.renderFilters()}
               <WelcomeVariantsControl fencing={this.props.fencing} />
-              {!this.mobile && this.renderQuickUpload()}
+              {!this.mobile && !this.state.isSimple && this.renderQuickUpload()}
             </Flex>
           )}
           <Flex className="welcome--main" column grow={1}>
@@ -375,3 +385,5 @@ export default class Welcome extends Component {
     );
   }
 }
+
+export default withRouter(Welcome);

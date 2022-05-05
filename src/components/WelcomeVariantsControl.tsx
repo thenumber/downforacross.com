@@ -37,7 +37,7 @@ export const WelcomeVariantsControl: React.FC<{
   };
   return (
     <div className={classes.container}>
-      <span className={classes.title}>Variants</span>
+      {/* <span className={classes.title}>Variants</span> */}
       <Link to="/">
         <span
           className={clsx(classes.option, {

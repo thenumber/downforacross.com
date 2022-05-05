@@ -47,7 +47,7 @@ export default class Player extends Component {
         ? this.props.currentCursor
         : this.getInitialSelected();
     this.state = {
-      selected: selected,
+      selected,
       direction: this.props.clues.across.length ? 'across' : 'down',
     };
 
@@ -129,7 +129,7 @@ export default class Player extends Component {
   getInitialSelected() {
     let r = 0;
     let c = 0;
-    let direction = this.props.clues.across.length ? 'across' : 'down';
+    const direction = this.props.clues.across.length ? 'across' : 'down';
     while (!this.grid.isWhite(r, c) || !this.props.clues[direction][this.grid.getParent(r, c, direction)]) {
       if (c + 1 < this.props.grid[0].length) {
         c += 1;
@@ -457,7 +457,7 @@ export default class Player extends Component {
             </div>
           </div>
         </GridControls>
-        {this.props.beta && (
+        {/* {this.props.beta && (
           <div
             style={{
               color: 'gray',
@@ -471,7 +471,7 @@ export default class Player extends Component {
               <ConnectionStats />
             </div>
           </div>
-        )}
+        )} */}
       </div>
     );
   }

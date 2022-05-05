@@ -3,7 +3,9 @@ import _ from 'lodash';
 import Flex from 'react-flexview';
 import {MdRadioButtonUnchecked, MdCheckCircle} from 'react-icons/md';
 import {GiCrossedSwords} from 'react-icons/gi';
-import {Link} from 'react-router-dom';
+import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
+import {Button} from '@material-ui/core';
+import {isSimpleView} from '../../lib/isSimpleView';
 
 export interface EntryProps {
   info: {
@@ -20,7 +22,7 @@ export interface EntryProps {
   fencing?: boolean;
 }
 
-export default class Entry extends Component<EntryProps> {
+class Entry extends Component<RouteComponentProps & EntryProps> {
   handleClick = () => {
     /*
     this.setState({
@@ -49,9 +51,25 @@ export default class Entry extends Component<EntryProps> {
     const numSolves = numSolvesOld + (stats?.numSolves || 0);
     const displayName = _.compact([author.trim(), this.size]).join(' | ');
     return (
-      <Link
-        to={`/beta/play/${pid}${fencing ? '?fencing=1' : ''}`}
+      <div
+        onKeyUp={() => {}}
+        role="button"
         style={{textDecoration: 'none', color: 'initial'}}
+        onClick={() => {
+          const path = `/beta/play/${pid}${fencing ? '?fencing=1' : ''}`;
+          const isSimple = isSimpleView(this.props.location);
+          const origin = window.location.origin;
+          if (isSimple) {
+            // eslint-disable-next-line
+            parent?.postMessage(
+              {appId: 'crossword', addPanel: {url: origin + path, title: `Crossword: ${title}`}},
+              '*'
+            );
+          } else {
+            this.props.history.push(path);
+          }
+        }}
+        tabIndex={0}
       >
         <Flex className="entry" column onClick={this.handleClick} onMouseLeave={this.handleMouseLeave}>
           <Flex className="entry--top--left">
@@ -84,7 +102,9 @@ export default class Entry extends Component<EntryProps> {
             </p>
           </Flex>
         </Flex>
-      </Link>
+      </div>
     );
   }
 }
+
+export default withRouter(Entry);

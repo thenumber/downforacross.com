@@ -3,6 +3,12 @@
   margin-top: 25px;
 }
 
+.simple .entry--container {
+  margin: 25px 25px 0px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
 .entry--icon {
   fill: #6aa9f4;
 }
@@ -12,6 +18,10 @@
 
 .mobile .entry--container {
   margin: 18px auto 0;
+}
+
+.simple .entry {
+  background-color: #fff;
 }
 
 .mobile .entry {

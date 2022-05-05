@@ -1,5 +1,4 @@
 .welcome {
-  background-color: #ffffff;
   color: var(--main-gray-1);
 }
 
@@ -35,6 +34,11 @@
 .welcome--sidebar {
   padding-bottom: 40px;
   border-right: 2px solid var(--main-blue);
+  overflow-y:auto;
+}
+
+.simple .welcome--sidebar {
+  padding-bottom: 0;
 }
 
 .welcome--sidebar > div {
@@ -47,6 +51,10 @@
   border-bottom: 2px solid var(--main-blue);
 }
 
+.simple .welcome--searchbar--container {
+  padding: 0 25px;
+  border-bottom: none;
+}
 .welcome.mobile .welcome--searchbar--container {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -123,6 +131,10 @@
   padding: 25px;
   font-size: 15px;
   width: 330px;
+}
+
+.simple .entry {
+  width: auto;
 }
 
 .mobile .entry {

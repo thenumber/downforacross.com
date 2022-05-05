@@ -125,6 +125,7 @@
 }
 
 .dark .entry {
+  background-color: #111;
   color: #bbb !important;
 }
 

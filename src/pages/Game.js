@@ -390,7 +390,7 @@ export default class Game extends Component {
 
     const desktopContent = (
       <>
-        <Nav v2 />
+        {/* <Nav v2 /> */}
         <Flex grow={1} style={{overflow: 'auto'}}>
           <Flex column shrink={0}>
             {this.showingGame && this.renderGame()}
