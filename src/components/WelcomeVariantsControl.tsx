@@ -1,13 +1,16 @@
 import {makeStyles} from '@material-ui/core';
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
 import clsx from 'clsx';
 // @ts-ignore
 import swal from '@sweetalert/with-react';
 
-export const WelcomeVariantsControl: React.FC<{
-  fencing?: boolean;
-}> = (props) => {
+const WelcomeVariantsControlBase: React.FC<
+  RouteComponentProps & {
+    fencing?: boolean;
+  }
+> = (props) => {
+  const {search} = props.location;
   const classes = useStyles();
   const showFencingInfo = () => {
     swal({
@@ -38,7 +41,7 @@ export const WelcomeVariantsControl: React.FC<{
   return (
     <div className={classes.container}>
       {/* <span className={classes.title}>Variants</span> */}
-      <Link to="/">
+      <Link to={`/${search}`}>
         <span
           className={clsx(classes.option, {
             selected: !props.fencing,
@@ -48,7 +51,7 @@ export const WelcomeVariantsControl: React.FC<{
         </span>
       </Link>
       <span>
-        <Link to="/fencing">
+        <Link to={`/fencing${search}`}>
           <span
             className={clsx(classes.option, {
               selected: !!props.fencing,
@@ -84,3 +87,5 @@ const useStyles = makeStyles({
     },
   },
 });
+
+export const WelcomeVariantsControl = withRouter(WelcomeVariantsControlBase);
